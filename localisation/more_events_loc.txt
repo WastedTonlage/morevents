@@ -1,0 +1,5 @@
+#CODE;ENGLISH;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+nuke.1.name;Excavation;;;;;;;;;;;;;x
+nuke.1.desc;Possible excavation;;;;;;;;;;;;;x
+nuke.1.optA;Do Excavation;;;;;;;;;;;;;x
+nuke.1.optB;Dont do excavation;;;;;;;;;;;;;x

@@ -1,0 +1,129 @@
+# Nuke Events
+
+namespace = nuke
+
+# Start of excavation event quest
+province_event = {
+	id = nuke.1
+	
+	title = "Excavation possible"
+	desc = "Excavation possible"
+	picture = GFX_evt_lady_guadalupe
+	
+	trigger = {
+		OR = {
+			207 = {
+				province = ROOT #Golden Isles
+			}
+			318 = {
+				province = ROOT #Amarillo
+			}
+			338 = {
+				province = ROOT #Sandia
+			}
+			1246 = {
+				province = ROOT #Tyler
+			}
+			251 = {
+				province = ROOT #Saline
+			}
+			216 = {
+				province = ROOT #Boone
+			}
+			476 = {
+				province = ROOT #Wheatland
+			}
+			2073 = {
+				province = ROOT #Las Vegas
+			}
+			491 = {
+				province = ROOT #Great Falls
+			}
+			540 = {
+				province = ROOT #Kitsap
+			}
+			402 = {
+				province = ROOT #Minot
+			}
+			151 = {
+				province = ROOT #Knox
+			}
+		}
+		owner = {
+			OR = {
+				religion = atomicist
+				religion = rust_cultist
+				religion = rust_cultist_reformed
+			}
+			learning = 15
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 1
+	}
+	
+	option = { #Do excavation
+		name = "Do excavation"
+		
+		owner = {
+			set_character_flag = doing_excavation
+		}
+	}
+	
+	option = { #Dont do excavation
+		name = "Dont do excavation"
+	}
+	
+}
+
+character_event = {
+	id = nuke.2
+	
+	hide_window = yes
+	has_character_flag = doing_excavation
+	mean_time_to_happen = {
+		months = 2
+	}
+	trigger = {
+		OR = {
+				religion = atomicist
+				religion = rust_cultist
+				religion = rust_cultist_reformed
+			}
+		learning = 15
+	}
+	
+	immediate = {
+		random_list = {
+			1 = { #Gets nuke
+				ROOT = { character_event = nuke.3}
+			}
+			
+			2 = { #Relic
+				ROOT = { character_event = nuke.4}
+			}
+			
+			2 = { #Nothing
+				ROOT = { character_event = nuke.5}
+			}
+		}
+	}
+}
+
+character_event = {
+	id = nuke.3
+	
+	title = "Find ancient weapon"
+	desc = "Find ancient weapon"
+	
+	option = { # Attempt to repair
+	
+	}
+	
+	option = { # Keep as relic
+		if = {
+			condition = 
+		}
+	}
+}
