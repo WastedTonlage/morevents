@@ -14,39 +14,51 @@ province_event = {
 		OR = {
 			207 = {
 				province = ROOT #Golden Isles
+				NOT = {has_province_flag = excavated}
 			}
 			318 = {
 				province = ROOT #Amarillo
+				NOT = {has_province_flag = excavated}
 			}
 			338 = {
 				province = ROOT #Sandia
+				NOT = {has_province_flag = excavated}
 			}
 			1246 = {
 				province = ROOT #Tyler
+				NOT = {has_province_flag = excavated}
 			}
 			251 = {
 				province = ROOT #Saline
+				NOT = {has_province_flag = excavated}
 			}
 			216 = {
 				province = ROOT #Boone
+				NOT = {has_province_flag = excavated}
 			}
 			476 = {
 				province = ROOT #Wheatland
+				NOT = {has_province_flag = excavated}
 			}
 			2073 = {
 				province = ROOT #Las Vegas
+				NOT = {has_province_flag = excavated}
 			}
 			491 = {
 				province = ROOT #Great Falls
+				NOT = {has_province_flag = excavated}
 			}
 			540 = {
 				province = ROOT #Kitsap
+				NOT = {has_province_flag = excavated}
 			}
 			402 = {
 				province = ROOT #Minot
+				NOT = {has_province_flag = excavated}
 			}
 			151 = {
 				province = ROOT #Knox
+				NOT = {has_province_flag = excavated}
 			}
 		}
 		owner = {
@@ -66,6 +78,7 @@ province_event = {
 	option = { #Do excavation
 		name = "Do excavation"
 		
+		set_province_flag = excavated
 		owner = {
 			set_character_flag = doing_excavation
 		}
@@ -95,6 +108,7 @@ character_event = {
 	}
 	
 	immediate = {
+		clr_character_flag = doing_excavation
 		random_list = {
 			1 = { #Gets nuke
 				ROOT = { character_event = nuke.3}
@@ -117,13 +131,127 @@ character_event = {
 	title = "Find ancient weapon"
 	desc = "Find ancient weapon"
 	
+	is_triggered_only = yes
 	option = { # Attempt to repair
-	
+		name = "Gather my best workers and attempt to repair the weapon"
+		set_character_flag = attempting_to_repair_nuke
 	}
 	
 	option = { # Keep as relic
+		name = "It'l make a fine addition to my collection"
 		if = {
-			condition = 
+			condition = {ROOT = {religion = atomicist}
+			prestige = 1000
+			piety = 1000
 		}
+		if = {
+			condition = {ROOT = {
+				OR = {
+					religion = rust_cultist
+					religion = rust_cultist_reformed
+				}
+			}}
+			prestige = 300
+			piety = 300
+		}
+	}
+}
+
+character_event = { #Find relic in ruins
+	id = nuke.4
+	
+	title = "Find ancient relic"
+	desc = "Find ancient relic"
+	
+	is_triggered_only = yes
+	option = {
+		name = "It'l make a fine addition to my collection"
+		prestige = 200
+		piety = 100
+	}
+}
+
+character_event = {
+	id = "nuke.5"
+	
+	is_triggered_only = yes
+	title = "Finds nothing in ruins"
+	desc = "Finds nothing in ruins"
+	
+	option = {
+		name = "Damn!"
+		prestige = -20
+	}
+}
+
+character_event = { #Internal event that decides success in repairing the nuke
+	id = "nuke.6"
+	
+	hide_window = yes
+	has_character_flag = attempting_to_repair_nuke
+	trigger = {
+		OR = {
+				religion = atomicist
+				religion = rust_cultist
+				religion = rust_cultist_reformed
+			}
+		learning = 15
+	}
+	
+	mean_time_to_happen = {
+		months = 6
+	}
+	
+	immediate = {
+		clr_character_flag = attempting_to_repair_nuke
+		random_list = {
+			1 = { #Nuke rebuilding succeeded
+				modifier = {
+					factor = 2
+					learning = 15
+				}
+				modifier = {
+					factor = 2
+					learning = 17
+				}
+				modifier = {
+					factor = 2
+					learning = 19
+				}
+				modifier = {
+					factor = 2
+					learning = 21
+				}
+				modifier = {
+					factor = 2
+					learning = 23
+				}
+				modifier = {
+					factor = 2
+					learning = 25
+				}
+				character_event = nuke.7
+			}
+			
+			12 = { #Nuke rebuilding failed
+				character_event = nuke.8
+			}
+			
+			12 = { #Nuke blows up
+				character_event = nuke.9
+			}
+		}
+	}
+}
+
+character_event = { #Succeeeds in building nuke
+	name = "Weapon repair succesful"
+	desc = "Weapon repair succesful"
+	
+	is_triggered_only = yes
+	option = {
+		name = "The gods themselves are with us!"
+		
+		set_character_flag = has_nuke
 	}
 }

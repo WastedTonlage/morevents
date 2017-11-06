@@ -1,0 +1,10 @@
+decisions = {
+	activate_nuke = {
+		is_high_prio = yes
+		
+		potential = {
+			has_character_flag = has_nuke
+			in_battle = yes
+		}
+	}
+}
